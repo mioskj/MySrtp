@@ -12,9 +12,12 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -26,6 +29,7 @@ import java.util.List;
 import static android.content.Context.SEARCH_SERVICE;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    private GridView gridView;
     private Button b1,b2,b3;
     private EditText mEditText;
     private ToggleButton toggleButton;
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         b1= (Button) findViewById(R.id.button);
         b2= (Button) findViewById(R.id.button2);
         b3= (Button) findViewById(R.id.button3);
+        gridView= (GridView) findViewById(R.id.gridview);
         toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
         switch1 = (android.widget.Switch) findViewById(R.id.switch1);
         b1.setOnClickListener(this);
@@ -82,6 +87,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+        gridView.setAdapter(new MyAdpter(this));
+    }
+
+
+    static class   MyAdpter extends BaseAdapter{
+        private int[] images={R.mipmap.ptr1,R.mipmap.ptr1,R.mipmap.ptr1,
+                              R.mipmap.ptr1,R.mipmap.ptr1,R.mipmap.ptr2,};
+        private Context context;
+        public MyAdpter(Context context){
+            this.context=context;
+        }
+        @Override
+        //返回总数
+        public int getCount() {
+            return images.length;
+        }
+
+        @Override
+        //获取每一个选项
+        public Object getItem(int position) {
+            return images[position];
+        }
+
+        @Override
+        //旋向的id
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        //为每一个旋向生成视图，该方法会被多次调用
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ImageView imageView =new ImageView(context);
+            imageView.setImageResource(images[position]);
+            return imageView;
+        }
     }
 
     /**
