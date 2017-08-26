@@ -5,5 +5,5 @@ package com.seu.a430.mysrtp;
  */
 
 public class StepCounting {
-
+    int a=10;
 }
